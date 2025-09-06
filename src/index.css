@@ -1,0 +1,328 @@
+/* Advanced Typography already loaded in HTML for performance */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Neurolink Advanced Digital Mental Health Platform - Premium Aesthetic */
+
+@layer base {
+  :root {
+    /* Cyprus & Sand Dune - Clean Professional Palette */
+    --background: 39 33% 92%; /* Sand Dune */
+    --foreground: 175 100% 13%; /* Cyprus */
+
+    /* Clean modern cards */
+    --card: 39 33% 95%;
+    --card-foreground: 175 100% 13%;
+
+    --popover: 39 33% 95%;
+    --popover-foreground: 175 100% 13%;
+
+    /* Primary - Cyprus Deep Teal */
+    --primary: 175 100% 13%; /* Cyprus #004643 */
+    --primary-foreground: 39 33% 92%; /* Sand Dune for text on Cyprus */
+    --primary-light: 175 70% 20%;
+    --primary-dark: 175 100% 8%;
+    --primary-glow: 175 80% 25%;
+
+    /* Secondary - Sand Dune Warm Neutral */
+    --secondary: 39 33% 92%; /* Sand Dune #F0EDE5 */
+    --secondary-foreground: 175 100% 13%;
+    --secondary-accent: 39 25% 88%;
+    --secondary-glow: 39 40% 90%;
+
+    /* Clean neutral tones */
+    --muted: 39 20% 88%;
+    --muted-foreground: 175 50% 25%;
+
+    --accent: 39 33% 85%;
+    --accent-foreground: 175 100% 13%;
+
+    /* Professional status colors */
+    --success: 145 50% 35%;
+    --success-foreground: 39 33% 92%;
+    --success-glow: 145 40% 45%;
+    --warning: 35 70% 50%;
+    --warning-foreground: 39 33% 92%;
+    --warning-glow: 35 60% 60%;
+    --destructive: 5 60% 50%;
+    --destructive-foreground: 39 33% 92%;
+    --destructive-glow: 5 50% 60%;
+
+    /* Clean interface elements */
+    --border: 39 20% 85%;
+    --input: 39 33% 95%;
+    --ring: 175 100% 13%;
+
+    --radius: 1rem;
+
+    /* Clean professional gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(175 100% 13%) 0%, hsl(175 80% 18%) 50%, hsl(175 60% 25%) 100%);
+    --gradient-calm: linear-gradient(135deg, hsl(39 33% 92%) 0%, hsl(39 25% 88%) 100%);
+    --gradient-wellness: linear-gradient(135deg, hsl(39 33% 95%) 0%, hsl(39 33% 92%) 100%);
+    --gradient-chat: linear-gradient(135deg, hsl(175 70% 20%) 0%, hsl(175 80% 25%) 100%);
+    --gradient-booking: linear-gradient(135deg, hsl(39 25% 88%) 0%, hsl(175 30% 85%) 100%);
+    --gradient-glow: linear-gradient(135deg, hsl(175 80% 25%) 0%, hsl(39 40% 85%) 100%);
+    --gradient-glass: linear-gradient(135deg, rgba(240,237,229,0.9) 0%, rgba(240,237,229,0.6) 100%);
+
+    /* Clean professional shadows */
+    --shadow-soft: 0 2px 25px -5px hsl(175 100% 13% / 0.08), 0 1px 10px -2px hsl(175 100% 13% / 0.04);
+    --shadow-medium: 0 4px 35px -8px hsl(175 100% 13% / 0.12), 0 2px 18px -4px hsl(175 100% 13% / 0.06);
+    --shadow-large: 0 8px 50px -12px hsl(175 100% 13% / 0.15), 0 4px 25px -6px hsl(175 100% 13% / 0.08);
+    --shadow-therapeutic: 0 8px 45px -10px hsl(175 100% 13% / 0.18), 0 4px 22px -5px hsl(175 100% 13% / 0.1);
+    --shadow-glow: 0 0 65px -15px hsl(175 80% 25% / 0.25);
+    --shadow-inner: inset 0 2px 10px 0 hsl(175 100% 13% / 0.03);
+
+    /* Smooth therapeutic animations */
+    --transition-smooth: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-bounce: all 0.45s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* Sidebar clean system */
+    --sidebar-background: 39 33% 92%;
+    --sidebar-foreground: 175 100% 13%;
+    --sidebar-primary: 175 100% 13%;
+    --sidebar-primary-foreground: 39 33% 92%;
+    --sidebar-accent: 39 25% 88%;
+    --sidebar-accent-foreground: 175 100% 13%;
+    --sidebar-border: 39 20% 85%;
+    --sidebar-ring: 175 100% 13%;
+  }
+
+  .dark {
+    /* Dark mode - Cyprus & Sand Dune professional dark theme */
+    --background: 175 50% 8%;
+    --foreground: 39 33% 92%;
+
+    --card: 175 40% 12%;
+    --card-foreground: 39 33% 92%;
+
+    --popover: 175 40% 12%;
+    --popover-foreground: 39 33% 92%;
+
+    --primary: 175 80% 25%;
+    --primary-foreground: 175 100% 8%;
+    --primary-light: 175 60% 30%;
+    --primary-dark: 175 100% 15%;
+
+    --secondary: 39 20% 15%;
+    --secondary-foreground: 39 33% 92%;
+    --secondary-accent: 39 25% 25%;
+
+    --muted: 175 30% 15%;
+    --muted-foreground: 39 20% 65%;
+
+    --accent: 175 25% 20%;
+    --accent-foreground: 39 33% 92%;
+
+    --success: 145 60% 40%;
+    --warning: 35 60% 55%;
+    --destructive: 5 70% 55%;
+
+    --border: 175 25% 18%;
+    --input: 175 30% 16%;
+    --ring: 175 80% 25%;
+
+    /* Dark professional gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(175 80% 25%) 0%, hsl(175 60% 30%) 50%, hsl(175 40% 35%) 100%);
+    --gradient-calm: linear-gradient(135deg, hsl(175 30% 18%) 0%, hsl(39 15% 20%) 100%);
+    --gradient-wellness: linear-gradient(135deg, hsl(39 15% 15%) 0%, hsl(175 30% 18%) 100%);
+    --gradient-chat: linear-gradient(135deg, hsl(175 60% 30%) 0%, hsl(175 40% 35%) 100%);
+    --gradient-booking: linear-gradient(135deg, hsl(39 20% 25%) 0%, hsl(175 35% 30%) 100%);
+
+    /* Dark sidebar */
+    --sidebar-background: 175 50% 8%;
+    --sidebar-foreground: 39 33% 92%;
+    --sidebar-primary: 175 80% 25%;
+    --sidebar-primary-foreground: 175 100% 8%;
+    --sidebar-accent: 175 25% 15%;
+    --sidebar-accent-foreground: 39 25% 85%;
+    --sidebar-border: 175 25% 18%;
+    --sidebar-ring: 175 80% 25%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-poppins;
+  }
+
+  .font-playfair {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  /* Therapeutic components with soft pastels */
+  .therapeutic-card {
+    @apply bg-gradient-to-br from-card to-card/80 border border-border/30 rounded-2xl p-8;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition-smooth);
+    backdrop-filter: blur(8px);
+  }
+
+  .therapeutic-card:hover {
+    box-shadow: var(--shadow-therapeutic);
+    transform: translateY(-3px);
+  }
+
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  .calm-gradient {
+    background: var(--gradient-calm);
+  }
+
+  .wellness-gradient {
+    background: var(--gradient-wellness);
+  }
+
+  .chat-gradient {
+    background: var(--gradient-chat);
+  }
+
+  .booking-gradient {
+    background: var(--gradient-booking);
+  }
+
+  .auth-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary-accent)));
+  }
+
+  .therapeutic-shadow {
+    box-shadow: var(--shadow-therapeutic);
+  }
+
+  .floating-card {
+    @apply bg-gradient-glass backdrop-blur-md border border-white/20 rounded-3xl;
+    box-shadow: var(--shadow-large);
+  }
+
+  .breathing-animation {
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  .pulse-gentle {
+    animation: pulse-gentle 2s ease-in-out infinite;
+  }
+
+  .slide-up {
+    animation: slide-up 0.6s ease-out;
+  }
+
+  .fade-in {
+    animation: fade-in 0.8s ease-out;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 8s ease-in-out infinite 2s;
+  }
+
+  .glass-card {
+    @apply bg-gradient-glass backdrop-blur-md border border-white/20 shadow-large;
+  }
+
+  /* Soft therapeutic text gradients */
+  .text-gradient-hero {
+    @apply bg-gradient-to-r from-primary via-primary-light to-primary-glow bg-clip-text text-transparent;
+  }
+
+  .text-gradient-calm {
+    @apply bg-gradient-to-r from-accent-foreground to-primary bg-clip-text text-transparent;
+  }
+}
+
+@layer utilities {
+  .font-inter {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  .font-poppins {
+    font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  }
+
+  .transition-therapeutic {
+    transition: var(--transition-smooth);
+  }
+
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-primary to-secondary-accent bg-clip-text text-transparent;
+  }
+
+  .text-gradient-calm {
+    @apply bg-gradient-to-r from-primary-light to-secondary-glow bg-clip-text text-transparent;
+  }
+
+  .border-gradient {
+    background: linear-gradient(white, white) padding-box,
+                var(--gradient-hero) border-box;
+    border: 2px solid transparent;
+  }
+
+  /* Therapeutic hover effects */
+  .hover-lift {
+    @apply transition-therapeutic hover:-translate-y-1 hover:shadow-therapeutic;
+  }
+
+  .hover-glow {
+    @apply transition-therapeutic hover:shadow-glow;
+  }
+
+  .hover-scale {
+    @apply transition-therapeutic hover:scale-105;
+  }
+}
+
+/* Therapeutic animations */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% { 
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
