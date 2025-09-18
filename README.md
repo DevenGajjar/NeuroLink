@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Welcome to your Lovable project
 
 ## Project info
@@ -71,3 +72,7 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+=======
+# NeuroLink
+Nurolink is a mental health–focused web platform designed to provide accessible emotional support, awareness, and resources for students and individuals. Our goal is to bridge the gap between people in need and the right guidance through AI-powered tools and an easy-to-use interface.
+>>>>>>> 75cfe4e8368a076d5932aaf539bbc96f451b9f53

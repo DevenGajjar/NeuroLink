@@ -3,20 +3,24 @@ import { Send, Bot, User, Loader2, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
+import { generateChatReply, GeminiHistoryItem } from '@/lib/gemini';
 
 interface Message {
   id: string;
   text: string;
   sender: 'user' | 'bot';
   timestamp: Date;
-  type?: 'normal' | 'escalation' | 'resource';
+  type?: 'normal' | 'escalation' | 'resource' | 'error';
 }
+
+// Crisis indicators to flag escalation styling if needed.
+const crisisIndicators = ['suicide', 'kill myself', 'hurt myself', 'end it all'];
 
 const ChatBot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Hello! I'm your AI mental health companion. I'm here to listen and provide support. How are you feeling today?",
+      text: "Hi! 🙂 It’s really good to hear from you. How’s your day going—anything on your mind?",
       sender: 'bot',
       timestamp: new Date(),
     }
@@ -33,57 +37,27 @@ const ChatBot = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Mock AI responses - In a real app, this would connect to an AI service
-  const getAIResponse = (userMessage: string): { text: string; type: 'normal' | 'escalation' | 'resource' } => {
-    const message = userMessage.toLowerCase();
-    
-    // Check for crisis indicators
-    if (message.includes('suicide') || message.includes('kill myself') || message.includes('hurt myself')) {
-      return {
-        text: "I'm really concerned about what you're sharing. These feelings are serious, and I want to make sure you get the right support. Please reach out to a crisis helpline immediately: National Suicide Prevention Lifeline at 988 or text 'HELLO' to 741741. Would you like me to help you connect with an on-campus counselor right now?",
-        type: 'escalation'
-      };
-    }
+  const buildGeminiHistory = (): GeminiHistoryItem[] => {
+    // Build history starting from the first user message to satisfy Gemini's requirement
+    const firstUserIdx = messages.findIndex((m) => m.sender === 'user');
+    if (firstUserIdx === -1) return [];
+    const trimmed = messages.slice(firstUserIdx);
+    const capped = trimmed.slice(Math.max(0, trimmed.length - 40));
+    return capped.map((m) => ({
+      role: m.sender === 'user' ? 'user' : 'model',
+      parts: [{ text: m.text }]
+    }));
+  };
 
-    // Anxiety responses
-    if (message.includes('anxious') || message.includes('anxiety') || message.includes('panic')) {
-      return {
-        text: "I understand you're feeling anxious. That's really difficult. Here are some immediate techniques that might help: 1) Try the 4-7-8 breathing technique: breathe in for 4, hold for 7, exhale for 8. 2) Ground yourself by naming 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, and 1 you can taste. Would you like me to guide you through a breathing exercise?",
-        type: 'resource'
-      };
-    }
-
-    // Depression responses
-    if (message.includes('depressed') || message.includes('depression') || message.includes('sad') || message.includes('hopeless')) {
-      return {
-        text: "I hear that you're going through a really tough time. Depression can make everything feel overwhelming. Remember that what you're feeling is valid, and you're not alone. Small steps can help: try to maintain a routine, get some sunlight, or reach out to someone you trust. Have you considered speaking with a counselor? I can help you book an appointment.",
-        type: 'resource'
-      };
-    }
-
-    // Stress responses
-    if (message.includes('stress') || message.includes('overwhelmed') || message.includes('pressure')) {
-      return {
-        text: "It sounds like you're dealing with a lot of stress. That's really common among students. Here are some strategies: break tasks into smaller pieces, prioritize what's most important, and don't forget to take breaks. Sometimes just talking about what's stressing you can help. What's the biggest source of stress for you right now?",
-        type: 'normal'
-      };
-    }
-
-    // Default supportive responses
-    const supportiveResponses = [
-      "Thank you for sharing that with me. It takes courage to talk about how you're feeling. Can you tell me more about what's going on?",
-      "I'm here to listen. What you're experiencing sounds really challenging. How long have you been feeling this way?",
-      "That sounds really difficult. You're taking a positive step by reaching out. What kind of support do you think would be most helpful right now?"
-    ];
-
-    return {
-      text: supportiveResponses[Math.floor(Math.random() * supportiveResponses.length)],
-      type: 'normal'
-    };
+  const computeType = (text: string): 'normal' | 'escalation' | 'resource' | 'error' => {
+    const lower = text.toLowerCase();
+    if (crisisIndicators.some(p => lower.includes(p))) return 'escalation';
+    if (/tip|try|exercise|breathe|step|guide/.test(lower)) return 'resource';
+    return 'normal';
   };
 
   const sendMessage = async () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || isTyping) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -96,20 +70,38 @@ const ChatBot = () => {
     setInputValue('');
     setIsTyping(true);
 
-    // Simulate AI thinking time
-    setTimeout(() => {
-      const response = getAIResponse(inputValue);
+    try {
+      const history = buildGeminiHistory();
+      const replyText = await generateChatReply(history, userMessage.text);
+      const botType = computeType(replyText);
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: response.text,
+        text: replyText,
         sender: 'bot',
         timestamp: new Date(),
-        type: response.type,
+        type: botType,
       };
-
       setMessages(prev => [...prev, botMessage]);
+    } catch (e: any) {
+      const errorMessage = typeof e?.message === 'string' ? e.message : 'Something went wrong';
+      const fallback: Message = {
+        id: (Date.now() + 2).toString(),
+        text: "Hmm, I wasn’t able to fetch that right now. Want me to try again?",
+        sender: 'bot',
+        timestamp: new Date(),
+        type: 'error',
+      };
+      const detail: Message = {
+        id: (Date.now() + 3).toString(),
+        text: `(Details: ${errorMessage})`,
+        sender: 'bot',
+        timestamp: new Date(),
+        type: 'error',
+      };
+      setMessages(prev => [...prev, fallback, detail]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -160,6 +152,8 @@ const ChatBot = () => {
                     ? "bg-destructive/10 border border-destructive/20 text-foreground"
                     : message.type === 'resource'
                     ? "bg-accent border border-accent-foreground/20 text-accent-foreground"
+                    : message.type === 'error'
+                    ? "bg-amber-100 border border-amber-300 text-foreground"
                     : "bg-card border border-border text-card-foreground shadow-soft"
                 )}
               >
